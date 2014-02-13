@@ -27,7 +27,7 @@ body {
   font-size: 48px;
 }
 
-.title body {
+.title body, .q body, .a body {
   background: #19B8D2;
 }
 .title .reveal h1, .title .reveal h2 {
@@ -110,4 +110,19 @@ body {
 
 blockquote em {
   color: red;
+}
+
+.q .reveal h2, .a .reveal h2 {
+  color: #fff;
+}
+
+.q .reveal section.present::before, .qg .reveal section.present::before {
+  content: "?";
+  font-size: 16em;
+  position: absolute;
+  z-index: -5;
+  text-align: center;
+  color: rgba(255,255,255,0.3);
+  top: 65%;
+  font-weight: 800;
 }
