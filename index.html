@@ -328,44 +328,208 @@ var html = markdown(template,data);
 </script></section>
 
 <section data-markdown data-state=sub><script type="text/template">
-## ORM
+## Hiding data
+</script></section>
+
+<section data-markdown data-state=q><script type="text/template">
+## Is data scary?
+</script></section>
+
+<section data-markdown data-state=a><script type="text/template">
+## Not really
 </script></section>
 
 <section data-markdown><script type="text/template">
-## Mapping
+## Change is
 
-- from databases to objects
+![change is scary](img/side-effects.png)
 </script></section>
 
 <section data-markdown><script type="text/template">
-## Lifetime of data
+## Launching rockets
+
+- code that does things: DB, AJAX etc
+- vs code that computes
+- OO keeps both in same place
+
+</script></section>
+
+<section data-markdown><script type="text/template">
+## Data is very generic
+</script></section>
+
+<section data-markdown><script type="text/template">
+## Generic means wonderful abstractions
+
+- works on any container
+- map transforms each 'value' inside
+- contains say "is there a value like X?"
 
 ```javascript
-// JS allocate objects
-// all ready with their state to simulate the users
-// running around
-var users = User.limit(100).all();
+_.map      // [a] -> (a -> b) -> [b]
+_.contains // [a] -> a -> Boolean
+```
+</script></section>
 
-// oh the poor users have been viciously squashed
-// into pure data, and stringified
-var html = template(
-  "{{users}}<li>{{name}}</li>{{/users}}"
-,{users:users});
+<section data-markdown><script type="text/template">
+## Let's make it specific
+
+- custom API for something simple
+- what has been abstracted?
+
+```javascript
+function User() {}
+User.prototype = {
+  getName: function() {
+  },
+  fullName: function() {
+  }
+};
+```
+</script></section>
+
+<section data-markdown><script type="text/template">
+## Why do we hide data at all?
+
+- if it changes
+</script></section>
+
+<section data-markdown data-state=change><script type="text/template">
+## Let's avoid change
+</script></section>
+
+<section data-markdown><script type="text/template">
+## Data
+
+- simply taking data and presenting it is stateless: HTTP
+- immutability
+</script></section>
+
+<section data-markdown><script type="text/template">
+## Immutability
+
+![jargon](img/jargon.png)
+</script></section>
+
+<section data-markdown><script type="text/template">
+## Mutate === change
+
+- mutate is just jargon for change
+- "oh the DNA has mutated" = it changed
+</script></section>
+
+<section data-markdown><script type="text/template">
+## Benefits
+
+- if I have the 16th of October, 2007 it stays that way
+
+```javascript
+var someDate = new Date(Date.parse("2007/10/16"));
+passDateSomewhere(someDate);
+
+// what happens if...
+var timestamp = Date.parse("1995/05/23");
+releaseDateOfSomething.setTime(timestamp);
+
+
+// somewhere else, screaming commences
+```
+</script></section>
+
+<section data-markdown><script type="text/template">
+## Wouldn't this be terrible?
+
+- if I have the number `0.30000000000000004`
+
+```javascript
+var almostZeroPointThree = 0.1 + 0.2;
+passNumber(almostZeroPointThree);
+
+almostZeroPointThree.setValue(104)
+
+// ARGH!
+```
+</script></section>
+
+<section data-markdown><script type="text/template">
+## A date does not have state
+
+- a date is a value
+- values don't change: e.g `Point(x,y)`, `Query(string: x, options: {})`
+</script></section>
+
+<section data-markdown><script type="text/template">
+## A rule for values
+
+- if you can't meaningfully say "oh [which one](http://dylanbeattie.blogspot.co.uk/2009/02/is-crisp-value-object.html)?" about an instance
+- e.g "Oh which 4th of July 1987?"
+- it really should be a value
+</script></section>
+
+<section data-markdown><script type="text/template">
+## Values for data structures
+
+- we can do the same with structures
+</script></section>
+
+<section data-markdown><script type="text/template">
+## Immutable list
+
+```javascript
+function append(headValue,tailQueue) {
+  var head = {};
+  Object.defineProperties(head,{
+    item: { value: headValue, writable: false },
+    tail: { value: tailQueue, writable: false }
+  })
+  return head;
+}
+function vals(queue) {
+  var items = [];
+  while(queue) { items.push(queue.item); queue = queue.tail; }
+  return items;
+}
+
+var a = append;
+var q1 = append(2,append(1));
+var q2 = append(3,q1);
+var q3 = append(4,q1);
+console.log(vals(q1),vals(q2),vals(q3)); // [2,1] [3,2,1] [4,2,1]
+```
+</script></section>
+
+<section data-markdown><script type="text/template">
+## Use
+
+- we get undo immediately
+- can safely share structure without copy
+
+```javascript
+var todos = undefined;
+function addTodo(todo) {
+  return append(todo,todos);
+}
+function undoAdd(todos) {
+  return todos.tail;
+}
+
+todos = append("buy eggs",todos);
+todos = append("buy cheers",todos);
+todos = undoAdd(todos);
+console.log(todos.item); // "buy eggs"
 ```
 
 </script></section>
 
 <section data-markdown><script type="text/template">
-## You probably wanted
+## Instead of `_.clone`
 
-```javascript
-var names = sql.query("SELECT name FROM users LIMIT ?",100);
+- try [mori](http://swannodette.github.io/mori/)
+- jargon for the idea: "persistent data structures"
 
-var html = template(
-  "{{names}}<li>{{.}}</li>{{/names}}"
-,{names:names});
-```
 </script></section>
+
+
 
 <section data-markdown data-state=q><script type="text/template">
 ## What's the alternative?
@@ -376,7 +540,7 @@ var html = template(
 </script></section>
 
 <section data-markdown><script type="text/template">
-## Functions have the best DI in the whole wide world
+## Functions have explicit dependencies
 
 ```javascript
 function doSomething(Date,window,XMLHttpRequest) {
@@ -402,8 +566,10 @@ var formatRedditData = pipeline(
   snakeToCamelCase
 );
 
-jsonp("http://www.reddit.com/r/javascript.json?jsonp=callback",function(resp) {
-  var nicelyFormatted = formatRedditData(resp);
+jsonp("http://www.reddit.com/r/javascript.json?jsonp=callback",
+  function(resp) {
+    var nicelyFormatted = formatRedditData(resp);
+    display(nicelyFormatted);
 })
 ```
 </script></section>
