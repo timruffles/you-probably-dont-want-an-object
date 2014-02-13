@@ -107,7 +107,7 @@ Alan Kay
 - and do something in response to the message
 </script></section>
 
-<section data-markdown><script type="text/template">
+<section data-markdown data-state=title><script type="text/template">
 ## OOP's objects
 </script></section>
 
@@ -188,7 +188,7 @@ account("value"); // 150
 
 </script></section>
 
-<section data-markdown><script type="text/template">
+<section data-markdown data-state=title><script type="text/template">
 ## We've defined objects
 </script></section>
 
@@ -219,6 +219,10 @@ account("value"); // 150
 
 <section data-markdown data-state=title><script type="text/template">
 ## Let's see how often that's true
+</script></section>
+
+<section data-markdown><script type="text/template">
+## ...for web apps
 </script></section>
 
 <section data-markdown><script type="text/template">
@@ -265,7 +269,7 @@ PhotosController.resize = function() {};
 </script></section>
 
 <section data-markdown><script type="text/template">
-## Solving its own problems
+## Solving its own 'problems'
 ```javascript
 PhotosController.show = function() {
   // this._photo is "private", and not available in the view
@@ -299,6 +303,7 @@ var html = markdown(template,data);
 - sessions
 - data associated with user
 - signup flow
+- triggering emails etc etc...
 </script></section>
 
 <section data-markdown><script type="text/template">
@@ -306,7 +311,7 @@ var html = markdown(template,data);
 </script></section>
 
 <section data-markdown><script type="text/template">
-## 'Stuff the user does'
+## 'Vaguely relates to a customer'
 </script></section>
 
 <section data-markdown><script type="text/template">
@@ -359,6 +364,10 @@ var html = markdown(template,data);
 - accessing different fields
 - made harder to use as they need initialisation
 - some that don't access fields at all
+</script></section>
+
+<section data-markdown class=bit-smaller><script type="text/template">
+## EverythingIsAnObject, state everywhere: not so great
 </script></section>
 
 <section data-markdown data-state=title><script type="text/template">
@@ -640,8 +649,7 @@ commands.onValue(applyCommand);
 <section data-markdown><script type="text/template">
 ## But...
 
-- I'm still storing the variable
-- Need to know current value
+- Still need to know current value
 - Any solution?
 
 </script></section>
@@ -687,7 +695,7 @@ loginState.map(not).assign($(".logout"),"prop","disabled");
 </script></section>
 
 <section data-markdown><script type="text/template">
-## Shared state & polymorphism
+## Hidden state and large API
 
 - many readers
 - contract: can't change state, only read

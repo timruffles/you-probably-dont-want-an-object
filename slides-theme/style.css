@@ -44,6 +44,7 @@ body {
   color: #19B8D2;
   line-height: 1.125em;
   margin-bottom: 0.25em;
+  word-wrap: normal;
 }
 
 .slides section {
