@@ -17,20 +17,14 @@
     <div class="slides">
 
 <section data-markdown><script type="text/template">
-# Objects, or functions
+## You probably don't want an object
 
 [@timruffles](http://twitter.com/timruffles)
 [@sidekicksrc](http://twitter.com/sidekicksrc)
 </script></section>
 
-<section data-markdown><script type="text/template">
-  > Two young fish are swimming, and they meet an older fish, who says, "Morning, boys, how's the water?"
-
-  > The young fish swim on, and then one goes, "What the hell is water?"
-</script></section>
-
-<section data-markdown><script type="text/template">
-## What the hell are objects?
+<section data-markdown data-state=q><script type="text/template">
+## What the hell is an object?
 </script></section>
 
 <section data-markdown><script type="text/template">
@@ -70,20 +64,8 @@ var imAnObject = [];
 Alan Kay
 </script></section>
 
-
-<section data-markdown><script type="text/template">
-## Why do we even have objects?
-
-> I'm sorry that I long ago coined the term "objects" for this topic because it gets many people to focus on the lesser idea. The big idea is "messaging"
-
-</script></section>
-
-<section data-markdown><script type="text/template">
-## He just wanted messaging
-</script></section>
-
-<section data-markdown><script type="text/template">
-## Why?
+<section data-markdown data-state=q><script type="text/template">
+## So what do Alan Kay's objects look like?
 </script></section>
 
 <section data-markdown><script type="text/template">
@@ -107,7 +89,7 @@ Alan Kay
 - can't see/modify state of receiver
 </script></section>
 
-<section data-markdown><script type="text/template">
+<section data-markdown data-state=q><script type="text/template">
 ## What the hell are objects?
 </script></section>
 
@@ -152,6 +134,13 @@ module.exports = /^hello$/; // uses k/v obj as namespace
 
 var someData = JSON.parse(resp.body); // k/v data
 ```
+</script></section>
+
+<section data-markdown><script type="text/template">
+## 'Don't use `new`'
+
+- ?!?!
+
 </script></section>
 
 <section data-markdown><script type="text/template">
@@ -200,19 +189,19 @@ account("value"); // 150
 </script></section>
 
 <section data-markdown><script type="text/template">
-## I've identified objects
+## We've defined objects
 </script></section>
 
 <section data-markdown><script type="text/template">
 ## And I'm here to say
 </script></section>
 
-<section data-markdown><script type="text/template">
-## It's an idea we use way too much
+<section data-markdown data-state=title><script type="text/template">
+## It's an idea we abuse
 </script></section>
 
 <section data-markdown><script type="text/template">
-## It's complicates our code
+## It complicates our code
 </script></section>
 
 <section data-markdown><script type="text/template">
@@ -511,6 +500,10 @@ almostZeroPointThree.setValue(104)
 - it really should be a value
 </script></section>
 
+<section data-markdown data-state=title><script type="text/template">
+## Objects are bad at values
+</script></section>
+
 <section data-markdown><script type="text/template">
 ## Values for data structures
 
@@ -683,12 +676,8 @@ loginState.map(not).assign($(".logout"),"prop","disabled");
 ## Actually objects are great
 </script></section>
 
-<section data-markdown data-state=q><script type="text/template">
-## But where and when?
-</script></section>
-
 <section data-markdown data-state=a><script type="text/template">
-## Essential state
+## When they're used in the right places
 </script></section>
 
 <section data-markdown><script type="text/template">
@@ -709,34 +698,8 @@ loginState.map(not).assign($(".logout"),"prop","disabled");
 ## Other examples
 
 - buffers
-- `Property` style things in streams
-- mostly 'state of our code', not state of stuff we're modelling
-
-</script></section>
-
-<section data-markdown><script type="text/template">
-## JS isn't pure FP
-
-- other languages can avoid: e.g Monads
-- but more horrid than objects if we try in JS
-
-```javascript
-// jcoglan, if works blog
-var z = pipe(unit(7), [ function(x) { return [x+1, 'inc.'] },
-                        function(x) { return [2*x, 'double.'] },
-                        function(x) { return [x-1, 'dec.'] }
-                      ]);
-```
-
-</script></section>
-
-<section data-markdown><script type="text/template">
-## Messaging passing itself
-
-- great
-- doesn't imply state
-- doesn't imply classes
-- between processes (e.g queues)
+- `Property` in streams
+- shared state of something in time/hardware, not state of stuff we're modelling
 
 </script></section>
 
@@ -749,16 +712,27 @@ var z = pipe(unit(7), [ function(x) { return [x+1, 'inc.'] },
 </script></section>
 
 <section data-markdown><script type="text/template">
-## And they've blinded us to good things
+## And they've blinded us to good ideas
 </script></section>
-
 
 <section data-markdown data-state=q><script type="text/template">
 ## Why did this happen?
 </script></section>
 
 <section data-markdown data-state=a><script type="text/template">
-## Learning implementations, not justifications
+## Learning derived ideas, not originals with justifications
+</script></section>
+
+<section data-markdown><script type="text/template">
+- Design patterns
+- Inheritance
+- SOLID
+- DCI
+- Dependency injection containers
+</script></section>
+
+<section data-markdown data-state=a><script type="text/template">
+## Far from 'best practice', many are painkillers for OO abuse
 </script></section>
 
 <section data-markdown data-state=q><script type="text/template">
@@ -780,7 +754,11 @@ var z = pipe(unit(7), [ function(x) { return [x+1, 'inc.'] },
 </script></section>
 
 <section data-markdown><script type="text/template">
-## Challenging the status quo makes things get better
+## Today's 'one right way' is tomorrow's mistake
+</script></section>
+
+<section data-markdown><script type="text/template">
+## Don't be an X-programmer, be a programmer
 </script></section>
 
 <section data-markdown ><script type="text/template">
